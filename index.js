@@ -72,7 +72,7 @@ app.listen(app.get('port'), function() {
             }
 			
 			 if (text.toLowerCase() === 'guida tv') {
-              sendGenericGuidaTv(sender)
+              sendGenericGuidaTV(sender)
 			  
 			 //  sendGenericMessageHelp(sender)
 			
@@ -314,7 +314,7 @@ function sendGenericMessageHelp(sender) {
 		 {"type":"web_url",
 		 "url":"http://www.raistoria.rai.it/palinsesto.aspx",
 		 "title":"Guida TV"}
-		 ,{"type":"element_share"}]
+	
 		 
 		 }] 
 				
