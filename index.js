@@ -100,7 +100,7 @@ app.listen(app.get('port'), function() {
 
 			 }
 			
-				else if (text.toLowerCase() === "\"accadde oggi\"") {
+				else if (text.toLowerCase() === "\"accadde\"") {
         sendGenericAccaddeOggi(sender)
 		//	sendGenericMessageHelp(sender)
 						continue
