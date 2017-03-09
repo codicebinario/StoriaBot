@@ -71,6 +71,14 @@ app.listen(app.get('port'), function() {
              continue
             }
 			
+			 if (text.toLowerCase() === 'guida tv') {
+              sendGenericGuidaTv(sender)
+			  
+			 //  sendGenericMessageHelp(sender)
+			
+             continue
+            }
+			
 			  else if  (text.toLowerCase() === 'help') {
              sendGenericMessageHelp(sender)
 			
@@ -107,14 +115,14 @@ app.listen(app.get('port'), function() {
 
 			 }
 			 
-			 	else if (text.toLowerCase() === "\"guida tv\"") {
+		/* 	 	else if (text.toLowerCase() === "\"guida tv\"") {
 					
 					//  vedere come fare 
-       // sendGenericAccaddeOggi(sender)
+        sendGenericGuidaTV(sender)
 		//	sendGenericMessageHelp(sender)
 						continue
 
-			 }
+			 } */
 			
 			
 			
@@ -287,6 +295,50 @@ function sendGenericMessageHelp(sender) {
 		
 		  
 	  }
+	  
+	  function sendGenericGuidaTV(sender) {
+	
+	
+//	accaddeoggi();
+	//storia();
+    messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": 
+				
+		//	elements
+		 [{"title":"Guida Tv","subtitle":"Programmazione giornaliera","image_url":"http://www.raistoria.rai.it/images/logo.png",
+		 "buttons":[
+		 {"type":"web_url",
+		 "url":"http://www.raistoria.rai.it/palinsesto.aspx",
+		 "title":"Guida TV"}
+		 ,{"type":"element_share"}]
+		 
+		 }] 
+				
+            } 
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+
+}		
+		
 	  
 function sendGenericAccaddeOggi(sender) {
 	
