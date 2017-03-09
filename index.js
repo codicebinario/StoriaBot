@@ -63,7 +63,7 @@ app.listen(app.get('port'), function() {
              continue
             }
 			
-			 if (text.toLowerCase() === 'accadde oggi') {
+			else if (text.toLowerCase() === 'accadde oggi') {
               sendGenericAccaddeOggi(sender)
 			  
 			 //  sendGenericMessageHelp(sender)
@@ -71,7 +71,7 @@ app.listen(app.get('port'), function() {
              continue
             }
 			
-			 if (text.toLowerCase() === 'guida tv') {
+		else if (text.toLowerCase() === 'guida tv') {
               sendGenericGuidaTV(sender)
 			  
 			 //  sendGenericMessageHelp(sender)
