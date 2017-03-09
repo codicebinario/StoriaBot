@@ -42,63 +42,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 	
 })
-
-
-
-/* app.post('/webhook',jsonParser, function (req, res) {
-    messaging_events = req.body.entry[0].messaging
-	//console.log("app.post ran")
-	// if (messaging_events!=null) {
-		for (i = 0; i < messaging_events.length; i++) {
-			event = req.body.entry[0].messaging[i]
-			sender = event.sender.id
-			//sendTextMessage(sender, "1", token)
-			if (event.message && event.message.text) {
-			//	sendTextMessage(sender, "2", token)
-				text = event.message.text
-				if (text === 'hi') {
-					sendGenericMessage(sender)
-					continue
-				}
-				sendTextMessage(sender, "parrot: " + text.substring(0, 200))
-			}
-		//	sendTextMessage(sender, "3", token)
-			if (event.postback) {
-				text = JSON.stringify(event.postback)
-				sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-				continue
-			}
-		//	sendTextMessage(sender, "4 ", token)
-		}
 	
-    res.sendStatus(200)
-}) */
-		
-	
- /* app.post('/webhook',jsonParser, function (req, res) {
- messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
-        if (event.message && event.message.text) {
-            text = event.message.text
-            if (text === 'ciao') {
-                sendGenericMessage(sender)
-                continue
-            }
-            sendTextMessage(sender, "Rai Cultura: " + text.substring(0, 200))
-        }
-        if (event.postback) {
-            text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
-        }
-    }
-    res.sendStatus(200)
-}) */
-
-	
-		
 
  app.post('/webhook',jsonParser, function (req, res) {
     messaging_events = req.body.entry[0].messaging
@@ -111,8 +55,16 @@ app.listen(app.get('port'), function() {
             text = event.message.text
 			
 			
-			 if (text.toLowerCase() === 'ultime notizie') {
+			 if (text.toLowerCase() === 'news') {
               sendGenericMessage(sender)
+			  
+			 //  sendGenericMessageHelp(sender)
+			
+             continue
+            }
+			
+			 if (text.toLowerCase() === 'accadde oggi') {
+              sendGenericAccaddeOggi(sender)
 			  
 			 //  sendGenericMessageHelp(sender)
 			
@@ -132,12 +84,12 @@ app.listen(app.get('port'), function() {
 		if (event.postback) {
 		var text = JSON.stringify(event.postback.payload)
 			if(text.toLowerCase() === "\"inizia\""){
-			sendTextMessage(sender, "Benvenuto, digita Ultime Notizie", token)
+			sendTextMessage(sender, "Benvenuto, digita News", token)
 			  			continue
 
 			}
 			else if (text.toLowerCase() === "\"start\""){
-			sendTextMessage(sender, "Benvenuto, digita Ultime Notizie", token)
+			sendTextMessage(sender, "Benvenuto, digita News", token)
 			 			continue
 
 			}
@@ -147,6 +99,24 @@ app.listen(app.get('port'), function() {
 						continue
 
 			 }
+			
+				else if (text.toLowerCase() === "\"accadde oggi\"") {
+        sendGenericAccaddeOggi(sender)
+		//	sendGenericMessageHelp(sender)
+						continue
+
+			 }
+			 
+			 	else if (text.toLowerCase() === "\"guida tv\"") {
+					
+					//  vedere come fare 
+       // sendGenericAccaddeOggi(sender)
+		//	sendGenericMessageHelp(sender)
+						continue
+
+			 }
+			
+			
 			
 			else if (text.toLowerCase() === "\"help\""){
 			sendGenericMessageHelp(sender)
@@ -196,19 +166,10 @@ function sendTextMessage(sender, text) {
 
 
 
-	var elements = "";
-  function storia() {
-		  
-		  	var request = require('request');
-			request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
-				if (!error && response.statusCode == 200) {
-					elements = body;
-				console.log(body) 
-				}
-				})
-		
-		  
-	  }
+
+  
+	  
+	
  
  
  function sendDisattiva(sender) {
@@ -265,15 +226,32 @@ function sendGenericMessageHelp(sender) {
                 "elements": 
 				
 			  [{
-"title":"Help",
-"subtitle":"Scrivi Novità per ricevere le ultime notizie da Rai Storia"
+"title":"News",
+"subtitle":"Scrivi News per ricevere le ultime notizie da Rai Storia"
 
 			  },  {
+
+"title":"Accadde Oggi",
+"subtitle":"Scrivi Accadde Oggi per ricevere avvenimenti del giorno"
+
+}
+
+,  {
+
+"title":"Guida TV",
+"subtitle":"Scrivi Guida TV per vedere la programmazione di oggi"
+
+}
+
+,  {
 
 "title":"Disattiva",
 "subtitle":"Scrivi Disattiva per non ricevere più messaggi"
 
-}]
+}
+
+
+]
 
 				
             } 
@@ -296,10 +274,69 @@ function sendGenericMessageHelp(sender) {
     })
 
 }
+	var elements = "";
+  function accaddeoggi() {
+		  
+		  	var request = require('request');
+			request('http://www.raistoria.rai.it/bot-accaddeoggi.aspx', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					elements = body;
+				console.log(body) 
+				}
+				})
 		
+		  
+	  }
+	  
+function sendGenericAccaddeOggi(sender) {
+	
+	
+	accaddeoggi();
+	//storia();
+    messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": 
+				
+			elements
+			/* [{"title":"Apertura della Camera del Parlamento Subalpino","subtitle":"Da venerdì 17 a domenica 19 marzo 2017, in occasione della Giornata dell'Unità nazionale, il Museo Nazionale del Risorgimento Italiano riaprirà alla visita del pubblico, dopo circa 30 anni, la Camera dei deputati del Parlamento Subalpino.","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/36517.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/apertura-della-camera-del-parlamento-subalpino/36517/default.aspx","title":"Apertura della Camera del Parlamento Subalpino"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]},{"title":"L’Europa e la Chiesa","subtitle":"Quando si comincia a parlare di un’Europa unita, alla fine del secondo conflitto mondiale, sul soglio pontificio siede Pio XII, favorevole alla formazione di questo nuovo soggetto politico. ","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/600300PRO/36515_600300PRO.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/l%E2%80%99europa-e-la-chiesa/36515/default.aspx","title":"L’Europa e la Chiesa"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]},{"title":"Beppe Fenoglio, da partigiano a scrittore","subtitle":"Fotografie tratte dall’album di famiglia di Beppe Fenoglio (1 marzo 1922 - 18 febbraio 1963) aprono questo video, dedicato in particolare alla partecipazione dello scrittore alla resistenza partigiana.","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/1036.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/beppe-fenoglio-da-partigiano-a-scrittore/1036/default.aspx","title":"Beppe Fenoglio, da partigiano a scrittore"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]}] */
+				
+            } 
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+
+}		
 		
+function storia() {
+		  
+		  	var request = require('request');
+			request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					elements = body;
+				console.log(body) 
+				}
+				})
 		
-		
+		  
+	  }		
+	  
 function sendGenericMessage(sender) {
 	storia();
     messageData = {
@@ -310,24 +347,7 @@ function sendGenericMessage(sender) {
                 "elements": 
 				
 			elements
-				// [{
-// "title":"Rai Storia",
-// "subtitle":"La guerra del Vietnam",
-// "image_url":"http://www.educational.rai.it/materiali/immagini_gallery/17627.jpg",
-// "buttons":[{
-// "type":"web_url",
-// "url":"http://www.raistoria.rai.it/gallery-refresh/una-bambina-e-la-guerra/1435/5/default.aspx#header",
- // "title": "Una bambina e la guerra"
-// },{
-// "type":"web_url",
-// "url":"http://www.raistoria.rai.it/gallery-refresh/una-bambina-e-la-guerra/1435/6/default.aspx#header",
- // "title": "Una bambina e la guerra"
-// },{
-// "type":"web_url",
-// "url":"http://www.raistoria.rai.it/gallery-refresh/una-bambina-e-la-guerra/1435/11/default.aspx",
- // "title": "Una bambina e la guerra"
-// }]
-// }]
+			
 				
             } 
         }
