@@ -380,8 +380,8 @@ function SaveSender(sender) {
         var msg = '';
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
+            console.log(chunk);
             msg += chunk;
-            console.log("response: " + chunk);
         });
         res.on('end', function () {
             console.log(JSON.parse(msg));
