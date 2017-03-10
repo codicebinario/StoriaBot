@@ -359,14 +359,46 @@ function sendGenericMessage(sender) {
 }
 
 function SaveSender(sender) {
-    var fs = require('fs');
+    console.log("SaveSender start: " + sender)
+    var http = require('http');
+    var data = JSON.stringify({
+        'sender': sender
+    });
+
+    var options = {
+        host: 'http://www.raistoria.rai.it',
+        port: '80',
+        path: '/StoriaBot/save_sender.aspx',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Length': data.length
+        }
+    };
+
+    var req = http.request(options, function (res) {
+        var msg = '';
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            msg += chunk;
+        });
+        res.on('end', function () {
+            console.log(JSON.parse(msg));
+        });
+    });
+
+    req.write(data);
+    req.end();
+    console.log("SaveSender end: " + sender)
+
+    /*var fs = require('fs');
     fs.writeFile("/tmp/senders", sender, function (err) {
         if (err) {
             return console.log("Error saving file: " + err);
         }
         console.log("The file was saved: sender id = " + sender);
-        setTimeout(function () { sendGenericAccaddeOggi(); }, 10000)
-    });
+        setTimeout(function () { sendGenericAccaddeOggi(sender); }, 30000)
+    });*/
 }
 
 
