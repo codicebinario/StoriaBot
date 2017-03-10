@@ -360,11 +360,12 @@ function sendGenericMessage(sender) {
 
 function SaveSender(sender) {
     var fs = require('fs');
-    fs.writeFile("/tmp/senders", sender.id, function (err) {
+    fs.writeFile("/tmp/senders", sender, function (err) {
         if (err) {
             return console.log("Error saving file: " + err);
         }
-        console.log("The file was saved!");
+        console.log("The file was saved: sender id = " + sender);
+        setTimeout(sendGenericAccaddeOggi(), 10000)
     });
 }
 
