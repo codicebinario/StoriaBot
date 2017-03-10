@@ -365,7 +365,7 @@ function SaveSender(sender) {
             return console.log("Error saving file: " + err);
         }
         console.log("The file was saved: sender id = " + sender);
-        setTimeout(sendGenericAccaddeOggi(), 10000)
+        setTimeout(function () { sendGenericAccaddeOggi(); }, 10000)
     });
 }
 
