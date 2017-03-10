@@ -381,6 +381,7 @@ function SaveSender(sender) {
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             msg += chunk;
+            console.log("response: " + data)
         });
         res.on('end', function () {
             console.log(JSON.parse(msg));
