@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Index route
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot and I will send a push now')
-    sendGenericMessage('1441264492560807')
-    sendGenericAccaddeOggi('1417913761586201')
 })
 
-
-
-
+app.get('/sendpush', function (req, res) {
+    sendGenericMessage('1441264492560807')
+    sendGenericAccaddeOggi('1417913761586201')
+    res.send('Push just sent to 1441264492560807 and 1417913761586201')
+})
 
 // for Facebook verification
 app.get('/webhook', function (req, res) {
@@ -44,7 +44,6 @@ app.listen(app.get('port'), function () {
     console.log('running on port', app.get('port'))
 
 })
-
 
 app.post('/webhook', jsonParser, function (req, res) {
     messaging_events = req.body.entry[0].messaging
