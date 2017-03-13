@@ -55,6 +55,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             console.log("event.message.text = " + text)
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
+                console.log(sender)
                 //console.log("sendGenericMessage (news)")
                 continue
             }
@@ -91,16 +92,15 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             else if (text.toLowerCase() === "\"news\"") {
                 sendGenericMessage(sender)
-                console.log("sendGenericMessage (news - postback)")
-                //	sendGenericMessageHelp(sender)
+                //console.log("sendGenericMessage (news - postback)")
+                console.log(sender)
                 continue
 
             }
 
             else if (text.toLowerCase() === "\"accadde\"") {
                 sendGenericAccaddeOggi(sender)
-                console.log("sendGenericAccaddeOggi (postback)")
-                //	sendGenericMessageHelp(sender)
+                //console.log("sendGenericAccaddeOggi (postback)")
                 continue
 
             }
