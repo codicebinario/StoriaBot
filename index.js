@@ -46,7 +46,7 @@ app.listen(app.get('port'), function () {
 
 app.post('/webhook', jsonParser, function (req, res) {
     messaging_events = req.body.entry[0].messaging
-    
+
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
@@ -55,15 +55,13 @@ app.post('/webhook', jsonParser, function (req, res) {
             console.log("event.message.text = " + text)
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
-                console.log("sendGenericMessage (news)")
-                //  sendGenericMessageHelp(sender)
+                //console.log("sendGenericMessage (news)")
                 continue
             }
 
             if (text.toLowerCase() === 'accadde oggi') {
                 sendGenericAccaddeOggi(sender)
-                console.log("sendGenericAccaddeOggi")
-                //  sendGenericMessageHelp(sender)
+                //console.log("sendGenericAccaddeOggi")
                 continue
             }
 
@@ -261,6 +259,7 @@ function sendGenericMessageHelp(sender) {
 
 }
 var elements = "";
+
 function accaddeoggi() {
 
     var request = require('request');
@@ -276,38 +275,40 @@ function accaddeoggi() {
 
 function sendGenericAccaddeOggi(sender) {
 
-
-    accaddeoggi();
+    // #Giuseppe visto che la chiamata a bot-accaddeoggi.aspx è asincrona la chiamata alla messages può essere fatta 
+    // solo dopo che la risposta a bot-accaddeoggi.aspx è arrivata; per questo la chiamata ad accaddeoggi() è inutile;
+    // portava al problema della risposta posticipata
+    //accaddeoggi();
     //storia();
-    messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements":
-
-			elements
-                /* [{"title":"Apertura della Camera del Parlamento Subalpino","subtitle":"Da venerdì 17 a domenica 19 marzo 2017, in occasione della Giornata dell'Unità nazionale, il Museo Nazionale del Risorgimento Italiano riaprirà alla visita del pubblico, dopo circa 30 anni, la Camera dei deputati del Parlamento Subalpino.","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/36517.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/apertura-della-camera-del-parlamento-subalpino/36517/default.aspx","title":"Apertura della Camera del Parlamento Subalpino"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]},{"title":"L’Europa e la Chiesa","subtitle":"Quando si comincia a parlare di un’Europa unita, alla fine del secondo conflitto mondiale, sul soglio pontificio siede Pio XII, favorevole alla formazione di questo nuovo soggetto politico. ","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/600300PRO/36515_600300PRO.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/l%E2%80%99europa-e-la-chiesa/36515/default.aspx","title":"L’Europa e la Chiesa"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]},{"title":"Beppe Fenoglio, da partigiano a scrittore","subtitle":"Fotografie tratte dall’album di famiglia di Beppe Fenoglio (1 marzo 1922 - 18 febbraio 1963) aprono questo video, dedicato in particolare alla partecipazione dello scrittore alla resistenza partigiana.","image_url":"http://www.educational.rai.it/materiali/immagini_articoli/1036.jpg","buttons":[{"type":"web_url","url":"http://www.raistoria.rai.it/articoli/beppe-fenoglio-da-partigiano-a-scrittore/1036/default.aspx","title":"Beppe Fenoglio, da partigiano a scrittore"},{"type":"element_share"},{"type":"postback","title":"Ultime notizie","payload":"News"}]}] */
-
+    var request = require('request');
+    request('http://www.raistoria.rai.it/bot-accaddeoggi.aspx', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            messageData = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": body
+                    }
+                }
             }
-        }
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData,
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
+            request({
+                url: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: token },
+                method: 'POST',
+                json: {
+                    recipient: { id: sender },
+                    message: messageData,
+                }
+            }, function (error, response, body) {
+                if (error) {
+                    console.log('Error sending messages: ', error)
+                } else if (response.body.error) {
+                    console.log('Error: ', response.body.error)
+                }
+            })
         }
     })
-
 }
 
 function storia() {
@@ -324,36 +325,36 @@ function storia() {
 }
 
 function sendGenericMessage(sender) {
-    storia();
-    messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements":
-
-			elements
-
-
+    //storia();
+    var request = require('request');
+    request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            messageData = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": body
+                    }
+                }
             }
-        }
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData,
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
+            request({
+                url: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: token },
+                method: 'POST',
+                json: {
+                    recipient: { id: sender },
+                    message: messageData,
+                }
+            }, function (error, response, body) {
+                if (error) {
+                    console.log('Error sending messages: ', error)
+                } else if (response.body.error) {
+                    console.log('Error: ', response.body.error)
+                }
+            })
         }
     })
-
 }
 
 function SaveSender(sender) {
