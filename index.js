@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot and I will send a push now')
     sendGenericMessage('1441264492560807')
+    sendGenericAccaddeOggi('1417913761586201')
 })
 
 
