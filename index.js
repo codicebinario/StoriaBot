@@ -46,28 +46,24 @@ app.listen(app.get('port'), function () {
 
 app.post('/webhook', jsonParser, function (req, res) {
     messaging_events = req.body.entry[0].messaging
-
-
+    
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-
-
+            console.log("event.message.text = " + text)
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
-
+                console.log("sendGenericMessage (news)")
                 //  sendGenericMessageHelp(sender)
-
                 continue
             }
 
             if (text.toLowerCase() === 'accadde oggi') {
                 sendGenericAccaddeOggi(sender)
-
+                console.log("sendGenericAccaddeOggi")
                 //  sendGenericMessageHelp(sender)
-
                 continue
             }
 
@@ -97,6 +93,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             else if (text.toLowerCase() === "\"news\"") {
                 sendGenericMessage(sender)
+                console.log("sendGenericMessage (news - postback)")
                 //	sendGenericMessageHelp(sender)
                 continue
 
@@ -104,6 +101,7 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             else if (text.toLowerCase() === "\"accadde\"") {
                 sendGenericAccaddeOggi(sender)
+                console.log("sendGenericAccaddeOggi (postback)")
                 //	sendGenericMessageHelp(sender)
                 continue
 
