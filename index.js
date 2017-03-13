@@ -82,7 +82,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             var text = JSON.stringify(event.postback.payload)
             if (text.toLowerCase() === "\"inizia\"") {
                 sendTextMessage(sender, "Benvenuto, digita News", token)
-                SaveSender(sender)
+                //SaveSender(sender)
                 continue
 
             }
@@ -94,7 +94,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             else if (text.toLowerCase() === "\"news\"") {
                 sendGenericMessage(sender)
                 console.log("save sender starting: " + sender)
-                SaveSender(sender)
+                //SaveSender(sender)
                 //console.log("sendGenericMessage (news - postback)")
                 console.log(sender)
                 continue
