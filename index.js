@@ -18,7 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
+    res.send('Hello world, I am a chat bot and I will send a push now')
+    sendGenericMessage('1441264492560807')
 })
 
 
