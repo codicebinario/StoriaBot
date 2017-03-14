@@ -481,7 +481,7 @@ function ActivatePushSender(sender, value) {
             if (value == 1) {
                 sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia")
             }
-            else if (value == 0) {
+            else if (value == 0) 
             {
                 sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
             }
