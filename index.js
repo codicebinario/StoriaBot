@@ -72,7 +72,6 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
             if (text.toLowerCase() === 'guida tv') {
-                console.log("window.open http://www.raistoria.rai.it/palinsesto.aspx")
                 sendTextMessage(sender, "La guida tv è accessibile dal menu")
                 continue
             }
@@ -472,9 +471,14 @@ function sendGenericMessage(sender) {
 
 function SaveSender(sender) {
     var request = require('request');
-    request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
+    request('https://graph.facebook.com/v2.6/' + sender + '/?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("SaveSender result:" + body)
+            console.log(body.first_name)
+            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + body.first_name, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log("SaveSender result:" + body)
+                }
+        })
         }
     })
 }
