@@ -53,7 +53,7 @@ app.post('/webhook', jsonParser, function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            console.log("event.message.text = " + text)
+            //console.log("event.message.text = " + text)
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
                 console.log(sender)
@@ -364,7 +364,7 @@ function SaveSender(sender) {
     var request = require('request');
     request('http://www.raistoria.rai.it/StoriaBot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            consol.log("SaveSender result:" + body)
+            console.log("SaveSender result:" + body)
         }
     })
 }
