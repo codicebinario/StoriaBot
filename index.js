@@ -365,7 +365,7 @@ function sendQuickAnswer(sender)
                       },
                       {
                           "content_type": "text",
-                          "title": "No",
+                          "title": "No, grazie",
                           "payload": ""
                       }
                     ]
@@ -382,7 +382,7 @@ function sendQuickAnswer(sender)
                       },
                       {
                           "content_type": "text",
-                          "title": "No",
+                          "title": "No, grazie",
                           "payload": ""
                       }
                     ]
