@@ -379,10 +379,14 @@ function sendQuickAnswer(sender)
                     }
                 })
             }
+            else
+            {
+                console.log("message data empty")
+            }
         }
         else
         {
-            console.log("get_seder_status error")
+            console.log("get_seder_status error: " + error)
         }
     })
 }
