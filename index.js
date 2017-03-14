@@ -256,7 +256,7 @@ function sendGenericMessageHelp(sender) {
 			  }, {
 
 			      "title": "Accadde Oggi",
-			      "subtitle": "Scrivi Accadde Oggi per ricevere avvenimenti del giorno"
+			      "subtitle": "Scrivi Accadde Oggi per gli avvenimenti del giorno"
 
 			  }
 
