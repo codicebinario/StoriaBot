@@ -495,8 +495,8 @@ function SaveSender(sender) {
                     console.log('Error sending messages: ', error)
                 }
             })*/
-            console.log('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&first_name=' + userprofile.first_name + '&last_name=' + userprofile.last_name + '&profile_pic=' + userprofile.profile_pic)
-            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&first_name=' + userprofile.first_name + '&last_name=' + userprofile.last_name + '&profile_pic=' + userprofile.profile_pic, function (error, response, body) {
+            console.log('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&first_name=' + encodeURIComponent(userprofile.first_name) + '&last_name=' + encodeURIComponent(userprofile.last_name) + '&profile_pic=' + encodeURIComponent(userprofile.profile_pic))
+            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&first_name=' + encodeURIComponent(userprofile.first_name) + '&last_name=' + encodeURIComponent(userprofile.last_name) + '&profile_pic=' + encodeURIComponent(userprofile.profile_pic), function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log("SaveSender result:" + body)
                 }
