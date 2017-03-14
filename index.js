@@ -71,7 +71,7 @@ app.post('/webhook', jsonParser, function (req, res) {
                 ActivatePushSender(sender, 0)
                 continue
             }
-            if (text.toLowerCase() === "\"guida tv\"") {
+            if (text.toLowerCase() === 'guida tv') {
                 console.log("window.open http://www.raistoria.rai.it/palinsesto.aspx")
                 sendTextMessage(sender, "La guida tv è accessibile dal menu")
                 continue
