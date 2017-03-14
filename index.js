@@ -478,7 +478,7 @@ function SaveSender(sender) {
             console.log("userprofile.firstname: " + userprofile.first_name)
             request({
                 url: 'http://www.raistoria.rai.it/storiabot/save_sender.aspx',
-                qs: { access_token: token },
+                //qs: { access_token: token },
                 method: 'POST',
                 json: {
                     senderid: sender ,
@@ -490,18 +490,17 @@ function SaveSender(sender) {
                     gender: userprofile.gender
                 }
             }, function (error, response, body) {
+                console.log("save_sender response: " + body)
                 if (error) {
                     console.log('Error sending messages: ', error)
-                } else if (response.body.error) {
-                    console.log('Error: ', response.body.error)
                 }
             })
 
-            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + userprofile.first_name , function (error, response, body) {
+            /*request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + userprofile.first_name , function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log("SaveSender result:" + body)
                 }
-        })
+            })*/
         }
     })
 }
