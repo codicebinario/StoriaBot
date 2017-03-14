@@ -208,7 +208,7 @@ function sendDisattiva(sender) {
 
 			  [{
 			      "title": "Help",
-			      "subtitle": "Scrivi Novità per ricevere le ultime notizie da Rai Storia"
+			      "subtitle": "Scrivi News per ricevere le ultime notizie da Rai Storia"
 
 			  }, {
 
@@ -263,14 +263,14 @@ function sendGenericMessageHelp(sender) {
 , {
 
     "title": "Guida TV",
-    "subtitle": "Scegli Guida TV dal menu per vedere la programmazione"
+    "subtitle": "Scegli Guida TV dal menu per la programmazione"
 
 }
 
 , {
 
     "title": "Disattiva",
-    "subtitle": "Scrivi Disattiva per non ricevere più messaggi"
+    "subtitle": "Scegli Notifiche dal menu per disattivare"
 
 }
 
