@@ -73,7 +73,6 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             if (text.toLowerCase() === "\"guida tv\"") {
                 console.log("window.open http://www.raistoria.rai.it/palinsesto.aspx")
-                window.open("http://www.raistoria.rai.it/palinsesto.aspx", "_blank")
                 sendTextMessage(sender, "La guida tv è accessibile dal menu")
                 continue
             }
