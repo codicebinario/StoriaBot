@@ -71,6 +71,10 @@ app.post('/webhook', jsonParser, function (req, res) {
                 ActivatePushSender(sender, 0)
                 continue
             }
+            else if (text.toLowerCase() === "\"guida tv\"") {
+                open("http://www.raistoria.rai.it/palinsesto.aspx", "_blank")
+                continue
+            }
             if (text.toLowerCase() === 'si, attiva') {
                 console.log("ActivatePushSender(postback, 1)")
                 ActivatePushSender(sender, 1)
