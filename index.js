@@ -109,8 +109,8 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             }
             else if (text.toLowerCase() === "\"notifiche\"") {
+                console.log("sendQuickAnswer(postback)")
                 sendQuickAnswer(sender)
-                //console.log("sendGenericAccaddeOggi (postback)")
                 continue
 
             }
@@ -326,10 +326,9 @@ function sendQuickAnswer(sender)
     // distinguere se l'utente ha o meno le notifiche abilitate..
     var request = require('request');
     var messageData = "";
-    request('http://www.raistoria.rai.it/get_seder_status.aspx', function (error, response, body) {
+    request('http://www.raistoria.rai.it/get_seder_status.aspx?senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            if (body == "0") 
-            {
+            if (body == "0") {
                 messageData = {
                     "text": "Vuoi attivare le notifiche?",
                     "quick_replies": [
@@ -346,8 +345,7 @@ function sendQuickAnswer(sender)
                     ]
                 }
             }
-            else if (body=="1")
-            {
+            else if (body == "1") {
                 messageData = {
                     "text": "Vuoi disattivare le notifiche?",
                     "quick_replies": [
@@ -364,8 +362,7 @@ function sendQuickAnswer(sender)
                     ]
                 }
             }
-            if (messageData!="")
-            {
+            if (messageData != "") {
                 request({
                     url: 'https://graph.facebook.com/v2.6/me/messages',
                     qs: { access_token: token },
@@ -380,8 +377,12 @@ function sendQuickAnswer(sender)
                     } else if (response.body.error) {
                         console.log('Error: ', response.body.error)
                     }
-                })      
+                })
             }
+        }
+        else
+        {
+            console.log("get_seder_status error")
         }
     })
 }
