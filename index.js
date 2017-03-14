@@ -473,7 +473,8 @@ function SaveSender(sender) {
     var request = require('request');
     request('https://graph.facebook.com/v2.6/' + sender + '/?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body.first_name)
+            console.log("body: " + body)
+            console.log("response: " + response)
             request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + body.first_name, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log("SaveSender result:" + body)
