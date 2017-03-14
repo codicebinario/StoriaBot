@@ -82,7 +82,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             var text = JSON.stringify(event.postback.payload)
             if (text.toLowerCase() === "\"inizia\"") {
                 sendTextMessage(sender, "Benvenuto, digita News", token)
-                //SaveSender(sender)
+                SaveSender(sender)
                 continue
 
             }
@@ -94,9 +94,9 @@ app.post('/webhook', jsonParser, function (req, res) {
             else if (text.toLowerCase() === "\"news\"") {
                 sendGenericMessage(sender)
                 console.log("save sender starting: " + sender)
-                //SaveSender(sender)
+                SaveSender(sender)
                 //console.log("sendGenericMessage (news - postback)")
-                console.log(sender)
+                console.log("save sender starting " + sender)
                 continue
 
             }
@@ -361,7 +361,16 @@ function sendGenericMessage(sender) {
 }
 
 function SaveSender(sender) {
-    console.log("SaveSender start: " + sender)
+    var request = require('request');
+    request('http://www.raistoria.rai.it/StoriaBot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            consol.log("SaveSender result:" + body)
+        }
+    })
+}
+
+function SaveSenderPost(sender) {
+    console.log("SaveSenderPost start: " + sender)
     var http = require('http');
     var data = JSON.stringify({
         'sender': sender
@@ -389,10 +398,10 @@ function SaveSender(sender) {
             console.log(JSON.parse(msg));
         });
     });
-    console.log("SaveSender req end")
+    console.log("SaveSenderPost req end")
     req.write(data);
     req.end();
-    console.log("SaveSender end: " + sender)
+    console.log("SaveSenderPost end: " + sender)
 
     /*var fs = require('fs');
     fs.writeFile("/tmp/senders", sender, function (err) {
