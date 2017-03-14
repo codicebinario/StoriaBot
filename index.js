@@ -72,7 +72,9 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
             if (text.toLowerCase() === "\"guida tv\"") {
-                open("http://www.raistoria.rai.it/palinsesto.aspx", "_blank")
+                console.log("window.open http://www.raistoria.rai.it/palinsesto.aspx")
+                window.open("http://www.raistoria.rai.it/palinsesto.aspx", "_blank")
+                sendTextMessage(sender, "La guida tv è accessibile dal menu")
                 continue
             }
             if (text.toLowerCase() === 'si, attiva') {
@@ -85,7 +87,7 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
 
-            else if (text.toLowerCase() === 'help') {
+            if (text.toLowerCase() === 'help') {
                 sendGenericMessageHelp(sender)
                 continue
             }
@@ -211,7 +213,7 @@ function sendDisattiva(sender) {
 			  }, {
 
 			      "title": "Disattiva",
-			      "subtitle": "Scrivi Disattiva per non ricevere più messaggi"
+			      "subtitle": "Scrivi 'si, disattiva' per non ricevere più messaggi"
 
 			  }]
 
@@ -261,7 +263,7 @@ function sendGenericMessageHelp(sender) {
 , {
 
     "title": "Guida TV",
-    "subtitle": "Scrivi Guida TV per vedere la programmazione di oggi"
+    "subtitle": "Scegli Guida TV dal menu per vedere la programmazione"
 
 }
 
