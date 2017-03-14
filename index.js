@@ -66,8 +66,18 @@ app.post('/webhook', jsonParser, function (req, res) {
                 //console.log("sendGenericAccaddeOggi")
                 continue
             }
-            if (text.toLowerCase() === 'si' || text.toLowerCase() === 'no') {
-                console.log("risposto " + text.toLowerCase())
+            if (text.toLowerCase() === 'si, disattiva') {
+                console.log("ActivatePushSender(postback, 0)")
+                ActivatePushSender(sender, 0)
+                continue
+            }
+            if (text.toLowerCase() === 'si, attiva') {
+                console.log("ActivatePushSender(postback, 1)")
+                ActivatePushSender(sender, 1)
+                continue
+            }
+            if (text.toLowerCase() === 'no, grazie') {
+                console.log("ha risposto: no, grazie")
                 continue
             }
 
@@ -117,14 +127,14 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             }
             else if (text.toLowerCase() === "\"disattivasi\"") {
-                console.log("ActivatePushSender(postback, 1)")
-                ActivatePushSender(sender, 1)
+                console.log("ActivatePushSender(postback, 0)")
+                ActivatePushSender(sender, 0)
                 continue
 
             }
             else if (text.toLowerCase() === "\"disattivano\"") {
-                console.log("ActivatePushSender(postback,0)")
-                ActivatePushSender(sender, 0)
+                console.log("ActivatePushSender(postback,1)")
+                ActivatePushSender(sender, 1)
                 continue
 
             }
@@ -350,13 +360,13 @@ function sendQuickAnswer(sender)
                     "quick_replies": [
                       {
                           "content_type": "text",
-                          "title": "Si",
+                          "title": "Si, attiva",
                           "payload": "disattivano"
                       },
                       {
                           "content_type": "text",
                           "title": "No",
-                          "payload": "disattivasi"
+                          "payload": ""
                       }
                     ]
                 }
@@ -367,13 +377,13 @@ function sendQuickAnswer(sender)
                     "quick_replies": [
                       {
                           "content_type": "text",
-                          "title": "Si",
+                          "title": "Si, disattiva",
                           "payload": "disattivasi"
                       },
                       {
                           "content_type": "text",
                           "title": "No",
-                          "payload": "disattivano"
+                          "payload": ""
                       }
                     ]
                 }
@@ -468,6 +478,14 @@ function ActivatePushSender(sender, value) {
     request('http://www.raistoria.rai.it/storiabot/activate_push_sender.aspx?v=' + value + '&senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("ActivatePushSender result:" + body)
+            if (value == 1) {
+                sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia")
+            }
+            else if (value == 0) {
+            {
+                sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
+            }
+            
         }
     })
 }
