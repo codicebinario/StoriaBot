@@ -326,7 +326,9 @@ function sendQuickAnswer(sender)
     // distinguere se l'utente ha o meno le notifiche abilitate..
     var request = require('request');
     var messageData = "";
+    console.log("sendQuickAnswer() " + sender);
     request('http://www.raistoria.rai.it/get_seder_status.aspx?senderid=' + sender, function (error, response, body) {
+        console.log("response.statusCode = " + response.statusCode);
         if (!error && response.statusCode == 200) {
             if (body == "0") {
                 messageData = {
