@@ -66,11 +66,13 @@ app.post('/webhook', jsonParser, function (req, res) {
                 //console.log("sendGenericAccaddeOggi")
                 continue
             }
-
+            if (text.toLowerCase() === 'si' || text.toLowerCase() === 'no') {
+                console.log("risposto " + text.toLowerCase())
+                continue
+            }
 
             else if (text.toLowerCase() === 'help') {
                 sendGenericMessageHelp(sender)
-
                 continue
             }
             sendTextMessage(sender, "Hai scritto " + text.substring(0, 200) + ", non è un comando valido. Se hai bisogno scrivi Help")
@@ -111,6 +113,18 @@ app.post('/webhook', jsonParser, function (req, res) {
             else if (text.toLowerCase() === "\"notifiche\"") {
                 console.log("sendQuickAnswer(postback)")
                 sendQuickAnswer(sender)
+                continue
+
+            }
+            else if (text.toLowerCase() === "\"disattivasi\"") {
+                console.log("ActivatePushSender(postback, 1)")
+                ActivatePushSender(sender, 1)
+                continue
+
+            }
+            else if (text.toLowerCase() === "\"disattivano\"") {
+                console.log("ActivatePushSender(postback,0)")
+                ActivatePushSender(sender, 0)
                 continue
 
             }
