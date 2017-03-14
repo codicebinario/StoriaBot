@@ -273,7 +273,7 @@ var elements = "";
 /*function accaddeoggi() {
 
     var request = require('request');
-    request('http://www.raistoria.rai.it/bot-accaddeoggi.aspx', function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/bot-accaddeoggi.aspx', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             elements = body;
             console.log(body)
@@ -291,7 +291,7 @@ function sendGenericAccaddeOggi(sender) {
     //accaddeoggi();
     //storia();
     var request = require('request');
-    request('http://www.raistoria.rai.it/bot-accaddeoggi.aspx', function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/bot-accaddeoggi.aspx', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             messageData = {
                 "attachment": {
@@ -326,8 +326,8 @@ function sendQuickAnswer(sender)
     // distinguere se l'utente ha o meno le notifiche abilitate..
     var request = require('request');
     var messageData = "";
-    console.log("sendQuickAnswer() " + sender);
-    request('http://www.raistoria.rai.it/get_sender_status.aspx?senderid=' + sender, function (error, response, body) {
+    console.log("sendQuickAnswer() " + sender + " link: http://www.raistoria.rai.it/storiabot/get_sender_status.aspx?senderid=" + sender);
+    request('http://www.raistoria.rai.it/storiabot/get_sender_status.aspx?senderid=' + sender, function (error, response, body) {
         console.log("response.statusCode = " + response.statusCode);
         if (!error && response.statusCode == 200) {
             if (body == "0") {
@@ -396,7 +396,7 @@ function sendQuickAnswer(sender)
 /*function storia() {
 
     var request = require('request');
-    request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/bot-response.aspx', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             elements = body;
             console.log(body)
@@ -409,7 +409,7 @@ function sendQuickAnswer(sender)
 function sendGenericMessage(sender) {
     //storia();
     var request = require('request');
-    request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/bot-response.aspx', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             messageData = {
                 "attachment": {
@@ -441,7 +441,7 @@ function sendGenericMessage(sender) {
 
 function SaveSender(sender) {
     var request = require('request');
-    request('http://www.raistoria.rai.it/StoriaBot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("SaveSender result:" + body)
         }
@@ -451,7 +451,7 @@ function SaveSender(sender) {
 function ActivatePushSender(sender, value) {
     // if value = 0 disactivate push for sender; if value = 1 activate push for sender
     var request = require('request');
-    request('http://www.raistoria.rai.it/StoriaBot/activate_push_sender.aspx?v=' + value + '&senderid=' + sender, function (error, response, body) {
+    request('http://www.raistoria.rai.it/storiabot/activate_push_sender.aspx?v=' + value + '&senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("ActivatePushSender result:" + body)
         }
