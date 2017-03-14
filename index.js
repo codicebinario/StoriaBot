@@ -327,7 +327,7 @@ function sendQuickAnswer(sender)
     var request = require('request');
     var messageData = "";
     console.log("sendQuickAnswer() " + sender);
-    request('http://www.raistoria.rai.it/get_seder_status.aspx?senderid=' + sender, function (error, response, body) {
+    request('http://www.raistoria.rai.it/get_sender_status.aspx?senderid=' + sender, function (error, response, body) {
         console.log("response.statusCode = " + response.statusCode);
         if (!error && response.statusCode == 200) {
             if (body == "0") {
@@ -388,7 +388,7 @@ function sendQuickAnswer(sender)
         }
         else
         {
-            console.log("get_seder_status error: " + error)
+            console.log("get_sender_status error: " + error)
         }
     })
 }
