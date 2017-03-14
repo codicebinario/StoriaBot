@@ -56,7 +56,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             //console.log("event.message.text = " + text)
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
-                console.log(sender)
+                SaveSender(sender)
                 //console.log("sendGenericMessage (news)")
                 continue
             }
@@ -88,6 +88,7 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             else if (text.toLowerCase() === "\"start\"") {
                 sendTextMessage(sender, "Benvenuto, digita News", token)
+                SaveSender(sender)
                 continue
 
             }
@@ -103,6 +104,12 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             else if (text.toLowerCase() === "\"accadde\"") {
                 sendGenericAccaddeOggi(sender)
+                //console.log("sendGenericAccaddeOggi (postback)")
+                continue
+
+            }
+            else if (text.toLowerCase() === "\"notifiche\"") {
+                sendQuickAnswer(sender)
                 //console.log("sendGenericAccaddeOggi (postback)")
                 continue
 
@@ -263,7 +270,7 @@ function sendGenericMessageHelp(sender) {
 }
 var elements = "";
 
-function accaddeoggi() {
+/*function accaddeoggi() {
 
     var request = require('request');
     request('http://www.raistoria.rai.it/bot-accaddeoggi.aspx', function (error, response, body) {
@@ -274,7 +281,7 @@ function accaddeoggi() {
     })
 
 
-}
+}*/
 
 function sendGenericAccaddeOggi(sender) {
 
@@ -314,7 +321,72 @@ function sendGenericAccaddeOggi(sender) {
     })
 }
 
-function storia() {
+function sendQuickAnswer(sender)
+{
+    // distinguere se l'utente ha o meno le notifiche abilitate..
+    var request = require('request');
+    var messageData = "";
+    request('http://www.raistoria.rai.it/get_seder_status.aspx', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            if (body == "0") 
+            {
+                messageData = {
+                    "text": "Vuoi attivare le notifiche?",
+                    "quick_replies": [
+                      {
+                          "content_type": "text",
+                          "title": "Si",
+                          "payload": "disattivano"
+                      },
+                      {
+                          "content_type": "text",
+                          "title": "No",
+                          "payload": "disattivasi"
+                      }
+                    ]
+                }
+            }
+            else if (body=="1")
+            {
+                messageData = {
+                    "text": "Vuoi disattivare le notifiche?",
+                    "quick_replies": [
+                      {
+                          "content_type": "text",
+                          "title": "Si",
+                          "payload": "disattivasi"
+                      },
+                      {
+                          "content_type": "text",
+                          "title": "No",
+                          "payload": "disattivano"
+                      }
+                    ]
+                }
+            }
+            if (messageData!="")
+            {
+                request({
+                    url: 'https://graph.facebook.com/v2.6/me/messages',
+                    qs: { access_token: token },
+                    method: 'POST',
+                    json: {
+                        recipient: { id: sender },
+                        message: messageData,
+                    }
+                }, function (error, response, body) {
+                    if (error) {
+                        console.log('Error sending messages: ', error)
+                    } else if (response.body.error) {
+                        console.log('Error: ', response.body.error)
+                    }
+                })      
+            }
+        }
+    })
+}
+
+/*function storia() {
 
     var request = require('request');
     request('http://www.raistoria.rai.it/bot-response.aspx', function (error, response, body) {
@@ -325,7 +397,7 @@ function storia() {
     })
 
 
-}
+}*/
 
 function sendGenericMessage(sender) {
     //storia();
@@ -365,6 +437,16 @@ function SaveSender(sender) {
     request('http://www.raistoria.rai.it/StoriaBot/save_sender.aspx?senderid=' + sender, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("SaveSender result:" + body)
+        }
+    })
+}
+
+function ActivatePushSender(sender, value) {
+    // if value = 0 disactivate push for sender; if value = 1 activate push for sender
+    var request = require('request');
+    request('http://www.raistoria.rai.it/StoriaBot/activate_push_sender.aspx?v=' + value + '&senderid=' + sender, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log("ActivatePushSender result:" + body)
         }
     })
 }
