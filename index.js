@@ -474,8 +474,9 @@ function SaveSender(sender) {
     request('https://graph.facebook.com/v2.6/' + sender + '/?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("body: " + body)
-            console.log("response: " + response.body.first_name)
-            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + response.body.first_name, function (error, response, body) {
+            var userprofile = JSON.parse(body);
+            console.log("userprofile.firstname: " + userprofile.first_name)
+            request('http://www.raistoria.rai.it/storiabot/save_sender.aspx?senderid=' + sender + '&name=' + userprofile.first_name, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log("SaveSender result:" + body)
                 }
