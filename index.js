@@ -436,8 +436,10 @@ function sendQuickAnswer(sender)
 
 function sendGenericMessage(sender) {
     //storia();
+    console.log("sendGenericMessage(" + sender + ")")
     var request = require('request');
     request('http://www.raistoria.rai.it/storiabot/bot-response.aspx', function (error, response, body) {
+        console.log("sendGenericMessage error " + error + " response.statusCode = " + response.statusCode)
         if (!error && response.statusCode == 200) {
             messageData = {
                 "attachment": {
