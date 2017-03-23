@@ -7,7 +7,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
-
+var os = require('os')
 app.set('port', (process.env.PORT || 5000))
 
 
@@ -97,7 +97,7 @@ app.post('/webhook', jsonParser, function (req, res) {
         if (event.postback) {
             var text = JSON.stringify(event.postback.payload)
             if (text.toLowerCase() === "\"inizia\"") {
-                sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per dare risposte in automatico agli utenti. Per ora è possibile utilizzare solo alcuni comandi. Nelle prossime settimane implementeremo altre funzionalità. Per sapere quali comandi utilizzare in questi giorni digita Help o seleziona le voci dal menù.", token)
+                sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per dare risposte in automatico agli utenti.\n Per ora è possibile utilizzare solo alcuni comandi. Nelle prossime settimane implementeremo altre funzionalità. Per sapere quali comandi utilizzare in questi giorni digita Help o seleziona le voci dal menù.", token)
                 SaveSender(sender)
                 continue
 
