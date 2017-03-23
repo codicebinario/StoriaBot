@@ -97,7 +97,7 @@ app.post('/webhook', jsonParser, function (req, res) {
         if (event.postback) {
             var text = JSON.stringify(event.postback.payload)
             if (text.toLowerCase() === "\"inizia\"") {
-                sendTextMessage(sender, "Buongiorno {{user_first_name}}, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per dare risposte in automatico agli utenti. Per ora è possibile utilizzare solo alcuni comandi. Nelle prossime settimane implementeremo altre funzionalità. Per sapere quali comandi utilizzare in questi giorni può digitare Help.", token)
+                sendTextMessage(sender, "Buongiorno " + {{user_first_name}} + ", stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per dare risposte in automatico agli utenti. Per ora è possibile utilizzare solo alcuni comandi. Nelle prossime settimane implementeremo altre funzionalità. Per sapere quali comandi utilizzare in questi giorni può digitare Help.", token)
                 SaveSender(sender)
                 continue
 
