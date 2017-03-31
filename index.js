@@ -89,7 +89,9 @@ app.post('/webhook', jsonParser, function (req, res) {
                 sendGenericMessageHelp(sender)
                 continue
             }
-            sendTextMessage(sender, "Hai scritto " + text.substring(0, 200) + ", non è un comando valido. Se hai bisogno scrivi Help")
+            
+              sendGenericCerca(sender,text.substring(0, 200))
+       //     sendTextMessage(sender, "Hai scritto " + text.substring(0, 200) + ", non è un comando valido. Se hai bisogno scrivi Help")
 
 
         }
@@ -310,6 +312,47 @@ var elements = "";
 
 
 }*/
+
+
+function sendGenericCerca(sender, parola) {
+
+    // #Giuseppe visto che la chiamata a bot-accaddeoggi.aspx è asincrona la chiamata alla messages può essere fatta 
+    // solo dopo che la risposta a bot-accaddeoggi.aspx è arrivata; per questo la chiamata ad accaddeoggi() è inutile;
+    // portava al problema della risposta posticipata
+    //accaddeoggi();
+    //storia();
+    var request = require('request');
+    request('http://www.raistoria.rai.it/storiabot/cerca.aspx?S=' + parola, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            messageData = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": body
+                    }
+                }
+            }
+            request({
+                url: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: token },
+                method: 'POST',
+                json: {
+                    recipient: { id: sender },
+                    message: messageData,
+                }
+            }, function (error, response, body) {
+                if (error) {
+                    console.log('Error sending messages: ', error)
+                } else if (response.body.error) {
+                    console.log('Error: ', response.body.error)
+                }
+            })
+        }
+    })
+}
+
+
 
 function sendGenericAccaddeOggi(sender) {
 
