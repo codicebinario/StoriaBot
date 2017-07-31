@@ -29,7 +29,7 @@ app.get('/sendpush', function (req, res) {
 
 // for Facebook verification
 app.get('/webhook', function (req, res) {
-    if (req.query['hub.verify_token'] === 'storia') {
+    if (req.query['hub.verify_token'] === 'a4bd86e22cd33fd594a598181fa3049d') {
         res.send(req.query['hub.challenge'])
     }
     res.send('Error, wrong token')
