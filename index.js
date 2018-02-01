@@ -273,6 +273,12 @@ function sendGenericMessageHelp(sender) {
 			      "subtitle": "Scrivi Accadde Oggi per gli avvenimenti del giorno"
 
 			  }
+			   {
+
+			      "title": "Cerca",
+			      "subtitle": "Scrivi Cerca per una ricerca nel portale di Rai Storia"
+
+			  }
 
 , {
 
