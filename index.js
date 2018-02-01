@@ -80,7 +80,7 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
 			 if (text.toLowerCase() === 'buongiorno') {
-                sendTextMessage(sender, "Buongiorno anche a te!")
+                sendTextMessage(sender, userprofile.first_name + ", buongiorno anche a te!")
                 continue
             }
             if (text.toLowerCase() === 'si, attiva') {
