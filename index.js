@@ -144,6 +144,13 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
 
             }
+			
+			  else if (text.toLowerCase() === "\"cerca\"") {
+                sendGenericAccaddeOggi(sender)
+                
+                continue
+
+            }
             else if (text.toLowerCase() === "\"disattivasi\"") {
                 console.log("ActivatePushSender(postback, 0)")
                 ActivatePushSender(sender, 0)
