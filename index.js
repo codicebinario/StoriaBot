@@ -79,6 +79,10 @@ app.post('/webhook', jsonParser, function (req, res) {
                 sendTextMessage(sender, "Ciao, sono il bot di Rai Storia!")
                 continue
             }
+			 if (text.toLowerCase() === 'buongiorno') {
+                sendTextMessage(sender, "Buongiorno anche a te " sender)
+                continue
+            }
             if (text.toLowerCase() === 'si, attiva') {
                 console.log("ActivatePushSender(postback, 1)")
                 ActivatePushSender(sender, 1)
