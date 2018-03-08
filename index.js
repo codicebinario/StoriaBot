@@ -344,7 +344,8 @@ function sendGenericCerca(sender, parola) {
     //accaddeoggi();
     //storia();
     var request = require('request');
-    request('http://www.raistoria.rai.it/storiabot/cerca.aspx?S=' + parola, function (error, response, body) {
+    var statraiplay = '&wt_mc=2.maap.fbbot.raicultura_nomeprogramma.&wt';
+    request('http://www.raistoria.rai.it/storiabot/cerca.aspx?S=' + parola + statraiplay, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             messageData = {
                 "attachment": {
