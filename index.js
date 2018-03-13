@@ -54,6 +54,8 @@ app.post('/webhook', jsonParser, function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
             //console.log("event.message.text = " + text)
+
+
             if (text.toLowerCase() === 'news') {
                 sendGenericMessage(sender)
                 SaveSender(sender)
@@ -69,6 +71,10 @@ app.post('/webhook', jsonParser, function (req, res) {
             if (text.toLowerCase() === 'si, disattiva') {
                 console.log("ActivatePushSender(postback, 0)")
                 ActivatePushSender(sender, 0)
+                continue
+            }
+            if (text.length() > 50) {
+                sendTextMessage(sender, "Aspetta, aspetta! Mi dispiace sono solo un bot e non riesco ancora a leggere frasi lunghe. Usa il menu o scrivi Help per sapere quali parole utilizzare. Grazie")
                 continue
             }
             if (text.toLowerCase() === 'guida tv') {
