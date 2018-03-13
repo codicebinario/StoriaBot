@@ -73,7 +73,10 @@ app.post('/webhook', jsonParser, function (req, res) {
                 ActivatePushSender(sender, 0)
                 continue
             }
-           
+            if (text.length > 50) {
+                sendTextMessage(sender, "Aspetta, aspetta! Mi dispiace sono solo un bot e non riesco ancora a leggere frasi lunghe. Usa il menu o scrivi Help per sapere quali parole utilizzare. Grazie")
+                continue
+            }
             if (text.toLowerCase() === 'guida tv') {
                 sendTextMessage(sender, "La guida tv è accessibile dal menu")
                 continue
