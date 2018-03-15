@@ -532,17 +532,17 @@ function sendHowManyAnswer(sender) {
         "quick_replies": [
             {
                 "content_type": "text",
-                "title": "Si",
+                "title": "Una al giorno",
                 "payload": "attivaall"
             },
             {
                 "content_type": "text",
-                "title": "Una volta a settimana",
+                "title": "Una a settimana",
                 "payload": "attivaone"
             },
             {
                 "content_type": "text",
-                "title": "No, grazie",
+                "title": "Mai",
                 "payload": "attivano"
             }
         ]
@@ -659,7 +659,7 @@ function ActivatePushSender(sender, value) {
         if (!error && response.statusCode == 200) {
             console.log("ActivatePushSender result:" + body)
             if (value == 1) {
-                sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia")
+                sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia ogni giorno")
             }
             else if (value == 2) {
                 sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia una volta a settimana")
