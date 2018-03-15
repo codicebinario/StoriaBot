@@ -102,13 +102,13 @@ app.post('/webhook', jsonParser, function (req, res) {
                 console.log("ha risposto: no, grazie")
                 continue
             }
-            if (text.toLowerCase() === 'uno al giorno') {
-                console.log("uno al giorno ActivatePushSender(postback, 1)")
+            if (text.toLowerCase() === 'una al giorno') {
+                console.log("una al giorno ActivatePushSender(postback, 1)")
                 ActivatePushSender(sender, 1)
                 continue
             }
-            if (text.toLowerCase() === 'uno a settimana') {
-                console.log("uno a settimana ActivatePushSender(postback, 2)")
+            if (text.toLowerCase() === 'una a settimana') {
+                console.log("una a settimana ActivatePushSender(postback, 2)")
                 ActivatePushSender(sender, 2)
                 continue
             }
