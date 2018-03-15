@@ -145,9 +145,8 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             }
             else if (text.toLowerCase() === "\"notifiche\"") {
-                console.log("sendQuickAnswer(postback)")
-                sendQuickAnswer(sender)
-                //sendHowManyAnswer(sender)
+                console.log("sendHowManyAnswer(postback)")
+                sendHowManyAnswer(sender)
                 continue
             }
 			
