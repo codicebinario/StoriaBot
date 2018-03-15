@@ -146,7 +146,8 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             else if (text.toLowerCase() === "\"notifiche\"") {
                 console.log("sendQuickAnswer(postback)")
-                sendQuickAnswer(sender)
+                //sendQuickAnswer(sender)
+                sendHowManyAnswer(sender)
                 continue
 
             }
@@ -168,6 +169,16 @@ app.post('/webhook', jsonParser, function (req, res) {
                 ActivatePushSender(sender, 1)
                 continue
 
+            }
+            else if (text.toLowerCase() === "\"attivaall\"") {
+                console.log("ActivatePushSender(postback,1)")
+                ActivatePushSender(sender, 1)
+                continue
+            }
+            else if (text.toLowerCase() === "\"attivaone\"") {
+                console.log("ActivatePushSender(postback,2)")
+                ActivatePushSender(sender, 2)
+                continue
             }
 
                 /* 	 	else if (text.toLowerCase() === "\"guida tv\"") {
@@ -493,6 +504,52 @@ function sendQuickAnswer(sender)
     })
 }
 
+// chiede all'utente se e quante volte vuole ricevere le notifiche push
+function sendHowManyAnswer(sender) {
+    var request = require('request');
+    var messageData = "";
+    console.log("sendHowManyAnswer() " + sender);
+    messageData = {
+        "text": "Vuoi ricevere le notifiche?",
+        "quick_replies": [
+            {
+                "content_type": "text",
+                "title": "Si",
+                "payload": "attivaall"
+            },
+            {
+                "content_type": "text",
+                "title": "Una volta a settimana",
+                "payload": "attivaone"
+            },
+            {
+                "content_type": "text",
+                "title": "No, grazie",
+                "payload": ""
+            }
+        ]
+    }
+    if (messageData != "") {
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: { access_token: token },
+            method: 'POST',
+            json: {
+                recipient: { id: sender },
+                message: messageData,
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error)
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error)
+            }
+        })
+    }
+    else {
+        console.log("message data empty")
+    }
+}
 /*function storia() {
 
     var request = require('request');
@@ -586,11 +643,12 @@ function ActivatePushSender(sender, value) {
             if (value == 1) {
                 sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia")
             }
-            else if (value == 0) 
-            {
-                sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
+            else if (value == 2) {
+                sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia una volta a settimana")
             }
-            
+            else if (value == 0) {
+                    sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
+            }
         }
     })
 }
