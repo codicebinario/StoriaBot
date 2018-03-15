@@ -69,7 +69,7 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
             if (text.toLowerCase() === 'si, disattiva') {
-                console.log("ActivatePushSender(postback, 0)")
+                console.log("si, disattiva ActivatePushSender(postback, 0)")
                 ActivatePushSender(sender, 0)
                 continue
             }
@@ -94,12 +94,27 @@ app.post('/webhook', jsonParser, function (req, res) {
                 continue
             }
             if (text.toLowerCase() === 'si, attiva') {
-                console.log("ActivatePushSender(postback, 1)")
+                console.log("si, attiva ActivatePushSender(postback, 1)")
                 ActivatePushSender(sender, 1)
                 continue
             }
             if (text.toLowerCase() === 'no, grazie') {
                 console.log("ha risposto: no, grazie")
+                continue
+            }
+            if (text.toLowerCase() === 'uno al giorno') {
+                console.log("uno al giorno ActivatePushSender(postback, 1)")
+                ActivatePushSender(sender, 1)
+                continue
+            }
+            if (text.toLowerCase() === 'uno a settimana') {
+                console.log("uno a settimana ActivatePushSender(postback, 2)")
+                ActivatePushSender(sender, 2)
+                continue
+            }
+            if (text.toLowerCase() === 'mai') {
+                console.log("mai ActivatePushSender(postback, 0)")
+                ActivatePushSender(sender, 0)
                 continue
             }
 
