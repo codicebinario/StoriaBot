@@ -1,13 +1,10 @@
-
-
-
-
-
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
 var os = require('os')
+var pageId = 61494232564
+
 app.set('port', (process.env.PORT || 5000))
 
 
@@ -53,7 +50,7 @@ app.post('/webhook', jsonParser, function (req, res) {
         // Iterate over each entry
         data.entry.forEach((pageEntry) => {
             // get the pageId
-            const pageId = pageEntry.id
+            pageId = pageEntry.id
             console.log("PAGEID: " + pageId)
             messaging_events = req.body.entry[0].messaging
 
@@ -141,13 +138,13 @@ app.post('/webhook', jsonParser, function (req, res) {
                 if (event.postback) {
                     var text = JSON.stringify(event.postback.payload)
                     if (text.toLowerCase() === "\"inizia\"") {
-                        sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per rispondere rapidamente a tutti gli utenti.\n Per ora è possibile utilizzare alcuni comandi o cercare video utilizzando parole chiave. \n \n Per sapere quali comandi utilizzare digita Help o seleziona le voci dal menù.", token)
+                        sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per rispondere rapidamente a tutti gli utenti.\n Per ora è possibile utilizzare alcuni comandi o cercare video utilizzando parole chiave. \n \n Per sapere quali comandi utilizzare digita Help o seleziona le voci dal menù.", accessTokens[pageId])
                         SaveSender(sender)
                         continue
 
                     }
                     else if (text.toLowerCase() === "\"start\"") {
-                        sendTextMessage(sender, "Benvenuto, digita News", token)
+                        sendTextMessage(sender, "Benvenuto, digita News", accessTokens[pageId])
                         SaveSender(sender)
                         continue
 
@@ -241,6 +238,9 @@ app.post('/webhook', jsonParser, function (req, res) {
 
 var token = "EAANch1rmYo4BAGACvAPZBVopuZB3jOKtUFTisGBEO0C0kJuqHve4ITEQNr0l74y1b7iZA0rid2QKlGjAeF5briYSTgTzvgETJXkDnBPjVj8FEzRN59u2gujQuPi47pbkWpv0wJm9FYLqeUCTO2RnQUZAbIQnhd1NRXZCifnnGoQZDZD"
 
+const accessTokens = {
+    61494232564: "EAANch1rmYo4BAGACvAPZBVopuZB3jOKtUFTisGBEO0C0kJuqHve4ITEQNr0l74y1b7iZA0rid2QKlGjAeF5briYSTgTzvgETJXkDnBPjVj8FEzRN59u2gujQuPi47pbkWpv0wJm9FYLqeUCTO2RnQUZAbIQnhd1NRXZCifnnGoQZDZD"
+}
 
 
 function sendTextMessage(sender, text) {
@@ -248,7 +248,7 @@ function sendTextMessage(sender, text) {
     let messageData = { text: text }
     request({
         url: 'https://graph.facebook.com/v2.8/me/messages',
-        qs: { access_token: token },
+        qs: { access_token: accessTokens[pageId] },
         method: 'POST',
         json: {
             recipient: { id: sender },
@@ -289,7 +289,7 @@ function sendDisattiva(sender) {
     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
+        qs: { access_token: accessTokens[pageId] },
         method: 'DELETE',
         json: {
             recipient: { id: sender },
@@ -350,7 +350,7 @@ function sendGenericMessageHelp(sender) {
     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
+        qs: { access_token: accessTokens[pageId] },
         method: 'POST',
         json: {
             recipient: { id: sender },
@@ -403,7 +403,7 @@ function sendGenericCerca(sender, parola) {
             }
             request({
                 url: 'https://graph.facebook.com/v2.6/me/messages',
-                qs: { access_token: token },
+                qs: { access_token: accessTokens[pageId] },
                 method: 'POST',
                 json: {
                     recipient: { id: sender },
@@ -443,7 +443,7 @@ function sendGenericAccaddeOggi(sender) {
             }
             request({
                 url: 'https://graph.facebook.com/v2.6/me/messages',
-                qs: { access_token: token },
+                qs: { access_token: accessTokens[pageId] },
                 method: 'POST',
                 json: {
                     recipient: { id: sender },
@@ -505,7 +505,7 @@ function sendQuickAnswer(sender) {
             if (messageData != "") {
                 request({
                     url: 'https://graph.facebook.com/v2.6/me/messages',
-                    qs: { access_token: token },
+                    qs: { access_token: accessTokens[pageId] },
                     method: 'POST',
                     json: {
                         recipient: { id: sender },
@@ -557,7 +557,7 @@ function sendHowManyAnswer(sender) {
     if (messageData != "") {
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: token },
+            qs: { access_token: accessTokens[pageId] },
             method: 'POST',
             json: {
                 recipient: { id: sender },
@@ -606,7 +606,7 @@ function sendGenericMessage(sender) {
             }
             request({
                 url: 'https://graph.facebook.com/v2.6/me/messages',
-                qs: { access_token: token },
+                qs: { access_token: accessTokens[pageId] },
                 method: 'POST',
                 json: {
                     recipient: { id: sender },
@@ -625,14 +625,14 @@ function sendGenericMessage(sender) {
 
 function SaveSender(sender) {
     var request = require('request');
-    request('https://graph.facebook.com/v2.6/' + sender + '/?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token, function (error, response, body) {
+    request('https://graph.facebook.com/v2.6/' + sender + '/?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + accessTokens[pageId], function (error, response, body) {
         if (!error && response.statusCode == 200) {
             //console.log("body: " + body)
             var userprofile = JSON.parse(body);
             /*console.log("userprofile.firstname: " + userprofile.first_name)
             request({
                 url: 'http://www.raistoria.rai.it/storiabot/save_sender.aspx',
-                //qs: { access_token: token },
+                //qs: { access_token: accessTokens[pageId] },
                 method: 'POST',
                 json: {
                     senderid: sender ,
