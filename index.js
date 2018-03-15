@@ -146,10 +146,9 @@ app.post('/webhook', jsonParser, function (req, res) {
             }
             else if (text.toLowerCase() === "\"notifiche\"") {
                 console.log("sendQuickAnswer(postback)")
-                //sendQuickAnswer(sender)
-                sendHowManyAnswer(sender)
+                sendQuickAnswer(sender)
+                //sendHowManyAnswer(sender)
                 continue
-
             }
 			
 			  else if (text.toLowerCase() === "\"cerca\"") {
@@ -159,25 +158,30 @@ app.post('/webhook', jsonParser, function (req, res) {
 
             }
             else if (text.toLowerCase() === "\"disattivasi\"") {
-                console.log("ActivatePushSender(postback, 0)")
+                console.log("disattivasi ActivatePushSender(postback, 0)")
                 ActivatePushSender(sender, 0)
                 continue
 
             }
             else if (text.toLowerCase() === "\"disattivano\"") {
-                console.log("ActivatePushSender(postback,1)")
+                console.log("disattivano ActivatePushSender(postback,1)")
                 ActivatePushSender(sender, 1)
                 continue
 
             }
             else if (text.toLowerCase() === "\"attivaall\"") {
-                console.log("ActivatePushSender(postback,1)")
+                console.log("attivaall ActivatePushSender(postback,1)")
                 ActivatePushSender(sender, 1)
                 continue
             }
             else if (text.toLowerCase() === "\"attivaone\"") {
-                console.log("ActivatePushSender(postback,2)")
+                console.log("attivaone ActivatePushSender(postback,2)")
                 ActivatePushSender(sender, 2)
+                continue
+            }
+            else if (text.toLowerCase() === "\"attivano\"") {
+                console.log("attivano ActivatePushSender(postback,0)")
+                ActivatePushSender(sender, 0)
                 continue
             }
 
@@ -525,7 +529,7 @@ function sendHowManyAnswer(sender) {
             {
                 "content_type": "text",
                 "title": "No, grazie",
-                "payload": ""
+                "payload": "attivano"
             }
         ]
     }
