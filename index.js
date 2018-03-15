@@ -55,158 +55,158 @@ app.post('/webhook', jsonParser, function (req, res) {
             // get the pageId
             const pageId = pageEntry.id
             console.log("PAGEID: " + pageId)
-        messaging_events = req.body.entry[0].messaging
+            messaging_events = req.body.entry[0].messaging
 
-        for (i = 0; i < messaging_events.length; i++) {
-            event = req.body.entry[0].messaging[i]
-            sender = event.sender.id
-            if (event.message && event.message.text) {
-                text = event.message.text
-                //console.log("event.message.text = " + text)
-
-
-                if (text.toLowerCase() === 'news') {
-                    sendGenericMessage(sender)
-                    SaveSender(sender)
-                    //console.log("sendGenericMessage (news)")
-                    continue
-                }
-
-                if (text.toLowerCase() === 'accadde oggi') {
-                    sendGenericAccaddeOggi(sender)
-                    //console.log("sendGenericAccaddeOggi")
-                    continue
-                }
-                if (text.toLowerCase() === 'si, disattiva') {
-                    console.log("si, disattiva ActivatePushSender(postback, 0)")
-                    ActivatePushSender(sender, 0)
-                    continue
-                }
-                if (text.length > 50) {
-                    sendTextMessage(sender, "Aspetta, aspetta! Mi dispiace sono solo un bot e non riesco ancora a leggere frasi lunghe. Usa il menu o scrivi Help per sapere quali parole utilizzare. Grazie")
-                    continue
-                }
-                if (text.toLowerCase() === 'guida tv') {
-                    sendTextMessage(sender, "La guida tv è accessibile dal menu")
-                    continue
-                }
-			     if (text.toLowerCase() === 'ciao') {
-                    sendTextMessage(sender, "Ciao, sono il bot di Rai Storia!")
-                    continue
-                }
-			     if (text.toLowerCase() === 'buongiorno') {
-                    sendTextMessage(sender, "Buongiorno anche a te, sono il bot di Rai Storia!")
-                    continue
-                }
-			     if (text.toLowerCase() === 'buonasera') {
-                    sendTextMessage(sender, "Buonasera anche a te,sono il bot di Rai Storia!")
-                    continue
-                }
-                if (text.toLowerCase() === 'si, attiva') {
-                    console.log("si, attiva ActivatePushSender(postback, 1)")
-                    ActivatePushSender(sender, 1)
-                    continue
-                }
-                if (text.toLowerCase() === 'no, grazie') {
-                    console.log("ha risposto: no, grazie")
-                    continue
-                }
-                if (text.toLowerCase() === 'una al giorno') {
-                    console.log("una al giorno ActivatePushSender(postback, 1)")
-                    ActivatePushSender(sender, 1)
-                    continue
-                }
-                if (text.toLowerCase() === 'una a settimana') {
-                    console.log("una a settimana ActivatePushSender(postback, 2)")
-                    ActivatePushSender(sender, 2)
-                    continue
-                }
-                if (text.toLowerCase() === 'mai') {
-                    console.log("mai ActivatePushSender(postback, 0)")
-                    ActivatePushSender(sender, 0)
-                    continue
-                }
-
-                if (text.toLowerCase() === 'help') {
-                    sendGenericMessageHelp(sender)
-                    continue
-                }
-            
-                  sendGenericCerca(sender,text.substring(0, 200))
-           //     sendTextMessage(sender, "Hai scritto " + text.substring(0, 200) + ", non è un comando valido. Se hai bisogno scrivi Help")
+            for (i = 0; i < messaging_events.length; i++) {
+                event = req.body.entry[0].messaging[i]
+                sender = event.sender.id
+                if (event.message && event.message.text) {
+                    text = event.message.text
+                    //console.log("event.message.text = " + text)
 
 
-            }
+                    if (text.toLowerCase() === 'news') {
+                        sendGenericMessage(sender)
+                        SaveSender(sender)
+                        //console.log("sendGenericMessage (news)")
+                        continue
+                    }
 
-            if (event.postback) {
-                var text = JSON.stringify(event.postback.payload)
-                if (text.toLowerCase() === "\"inizia\"") {
-                    sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per rispondere rapidamente a tutti gli utenti.\n Per ora è possibile utilizzare alcuni comandi o cercare video utilizzando parole chiave. \n \n Per sapere quali comandi utilizzare digita Help o seleziona le voci dal menù.", token)
-                    SaveSender(sender)
-                    continue
+                    if (text.toLowerCase() === 'accadde oggi') {
+                        sendGenericAccaddeOggi(sender)
+                        //console.log("sendGenericAccaddeOggi")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'si, disattiva') {
+                        console.log("si, disattiva ActivatePushSender(postback, 0)")
+                        ActivatePushSender(sender, 0)
+                        continue
+                    }
+                    if (text.length > 50) {
+                        sendTextMessage(sender, "Aspetta, aspetta! Mi dispiace sono solo un bot e non riesco ancora a leggere frasi lunghe. Usa il menu o scrivi Help per sapere quali parole utilizzare. Grazie")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'guida tv') {
+                        sendTextMessage(sender, "La guida tv è accessibile dal menu")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'ciao') {
+                        sendTextMessage(sender, "Ciao, sono il bot di Rai Storia!")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'buongiorno') {
+                        sendTextMessage(sender, "Buongiorno anche a te, sono il bot di Rai Storia!")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'buonasera') {
+                        sendTextMessage(sender, "Buonasera anche a te,sono il bot di Rai Storia!")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'si, attiva') {
+                        console.log("si, attiva ActivatePushSender(postback, 1)")
+                        ActivatePushSender(sender, 1)
+                        continue
+                    }
+                    if (text.toLowerCase() === 'no, grazie') {
+                        console.log("ha risposto: no, grazie")
+                        continue
+                    }
+                    if (text.toLowerCase() === 'una al giorno') {
+                        console.log("una al giorno ActivatePushSender(postback, 1)")
+                        ActivatePushSender(sender, 1)
+                        continue
+                    }
+                    if (text.toLowerCase() === 'una a settimana') {
+                        console.log("una a settimana ActivatePushSender(postback, 2)")
+                        ActivatePushSender(sender, 2)
+                        continue
+                    }
+                    if (text.toLowerCase() === 'mai') {
+                        console.log("mai ActivatePushSender(postback, 0)")
+                        ActivatePushSender(sender, 0)
+                        continue
+                    }
 
-                }
-                else if (text.toLowerCase() === "\"start\"") {
-                    sendTextMessage(sender, "Benvenuto, digita News", token)
-                    SaveSender(sender)
-                    continue
+                    if (text.toLowerCase() === 'help') {
+                        sendGenericMessageHelp(sender)
+                        continue
+                    }
 
-                }
-                else if (text.toLowerCase() === "\"news\"") {
-                    sendGenericMessage(sender)
-                    console.log("save sender starting: " + sender)
-                    SaveSender(sender)
-                    //console.log("sendGenericMessage (news - postback)")
-                    console.log("save sender starting " + sender)
-                    continue
+                    sendGenericCerca(sender, text.substring(0, 200))
+                    //     sendTextMessage(sender, "Hai scritto " + text.substring(0, 200) + ", non è un comando valido. Se hai bisogno scrivi Help")
+
 
                 }
 
-                else if (text.toLowerCase() === "\"accadde\"") {
-                    sendGenericAccaddeOggi(sender)
-                    //console.log("sendGenericAccaddeOggi (postback)")
-                    continue
+                if (event.postback) {
+                    var text = JSON.stringify(event.postback.payload)
+                    if (text.toLowerCase() === "\"inizia\"") {
+                        sendTextMessage(sender, "Buongiorno, stiamo lavorando ad una versione Beta del Bot Messenger di Rai Storia per rispondere rapidamente a tutti gli utenti.\n Per ora è possibile utilizzare alcuni comandi o cercare video utilizzando parole chiave. \n \n Per sapere quali comandi utilizzare digita Help o seleziona le voci dal menù.", token)
+                        SaveSender(sender)
+                        continue
 
-                }
-                else if (text.toLowerCase() === "\"notifiche\"") {
-                    console.log("sendHowManyAnswer(postback)")
-                    sendHowManyAnswer(sender)
-                    continue
-                }
-			
-			      else if (text.toLowerCase() === "\"cerca\"") {
-                    sendGenericAccaddeOggi(sender)
-                
-                    continue
+                    }
+                    else if (text.toLowerCase() === "\"start\"") {
+                        sendTextMessage(sender, "Benvenuto, digita News", token)
+                        SaveSender(sender)
+                        continue
 
-                }
-                else if (text.toLowerCase() === "\"disattivasi\"") {
-                    console.log("disattivasi ActivatePushSender(postback, 0)")
-                    ActivatePushSender(sender, 0)
-                    continue
+                    }
+                    else if (text.toLowerCase() === "\"news\"") {
+                        sendGenericMessage(sender)
+                        console.log("save sender starting: " + sender)
+                        SaveSender(sender)
+                        //console.log("sendGenericMessage (news - postback)")
+                        console.log("save sender starting " + sender)
+                        continue
 
-                }
-                else if (text.toLowerCase() === "\"disattivano\"") {
-                    console.log("disattivano ActivatePushSender(postback,1)")
-                    ActivatePushSender(sender, 1)
-                    continue
+                    }
 
-                }
-                else if (text.toLowerCase() === "\"attivaall\"") {
-                    console.log("attivaall ActivatePushSender(postback,1)")
-                    ActivatePushSender(sender, 1)
-                    continue
-                }
-                else if (text.toLowerCase() === "\"attivaone\"") {
-                    console.log("attivaone ActivatePushSender(postback,2)")
-                    ActivatePushSender(sender, 2)
-                    continue
-                }
-                else if (text.toLowerCase() === "\"attivano\"") {
-                    console.log("attivano ActivatePushSender(postback,0)")
-                    ActivatePushSender(sender, 0)
-                    continue
-                }
+                    else if (text.toLowerCase() === "\"accadde\"") {
+                        sendGenericAccaddeOggi(sender)
+                        //console.log("sendGenericAccaddeOggi (postback)")
+                        continue
+
+                    }
+                    else if (text.toLowerCase() === "\"notifiche\"") {
+                        console.log("sendHowManyAnswer(postback)")
+                        sendHowManyAnswer(sender)
+                        continue
+                    }
+
+                    else if (text.toLowerCase() === "\"cerca\"") {
+                        sendGenericAccaddeOggi(sender)
+
+                        continue
+
+                    }
+                    else if (text.toLowerCase() === "\"disattivasi\"") {
+                        console.log("disattivasi ActivatePushSender(postback, 0)")
+                        ActivatePushSender(sender, 0)
+                        continue
+
+                    }
+                    else if (text.toLowerCase() === "\"disattivano\"") {
+                        console.log("disattivano ActivatePushSender(postback,1)")
+                        ActivatePushSender(sender, 1)
+                        continue
+
+                    }
+                    else if (text.toLowerCase() === "\"attivaall\"") {
+                        console.log("attivaall ActivatePushSender(postback,1)")
+                        ActivatePushSender(sender, 1)
+                        continue
+                    }
+                    else if (text.toLowerCase() === "\"attivaone\"") {
+                        console.log("attivaone ActivatePushSender(postback,2)")
+                        ActivatePushSender(sender, 2)
+                        continue
+                    }
+                    else if (text.toLowerCase() === "\"attivano\"") {
+                        console.log("attivano ActivatePushSender(postback,0)")
+                        ActivatePushSender(sender, 0)
+                        continue
+                    }
 
                     /* 	 	else if (text.toLowerCase() === "\"guida tv\"") {
                             
@@ -219,18 +219,19 @@ app.post('/webhook', jsonParser, function (req, res) {
 
 
 
-                else if (text.toLowerCase() === "\"help\"") {
-                    sendGenericMessageHelp(sender)
-                    continue
+                    else if (text.toLowerCase() === "\"help\"") {
+                        sendGenericMessageHelp(sender)
+                        continue
+
+                    }
+
+                    else if (text.toLowerCase() === "\"Disattiva\"") {
+                        sendDisattiva(sender)
+                        continue
+
+                    }
 
                 }
-
-                else if (text.toLowerCase() === "\"Disattiva\"") {
-                    sendDisattiva(sender)
-                    continue
-
-                }
-
             }
         })
     }
@@ -271,16 +272,16 @@ function sendDisattiva(sender) {
                 "template_type": "generic",
                 "elements":
 
-			  [{
-			      "title": "Help",
-			      "subtitle": "Scrivi News per ricevere le ultime notizie da Rai Storia"
+                [{
+                    "title": "Help",
+                    "subtitle": "Scrivi News per ricevere le ultime notizie da Rai Storia"
 
-			  }, {
+                }, {
 
-			      "title": "Disattiva",
-			      "subtitle": "Scrivi 'si, disattiva' per non ricevere più messaggi"
+                    "title": "Disattiva",
+                    "subtitle": "Scrivi 'si, disattiva' per non ricevere più messaggi"
 
-			  }]
+                }]
 
 
             }
@@ -314,34 +315,34 @@ function sendGenericMessageHelp(sender) {
                 "template_type": "generic",
                 "elements":
 
-			  [{
-			      "title": "News",
-			      "subtitle": "Scrivi News per ricevere le ultime notizie da Rai Storia"
+                [{
+                    "title": "News",
+                    "subtitle": "Scrivi News per ricevere le ultime notizie da Rai Storia"
 
-			  }, {
+                }, {
 
-			      "title": "Accadde Oggi",
-			      "subtitle": "Scrivi Accadde Oggi per gli avvenimenti del giorno"
+                    "title": "Accadde Oggi",
+                    "subtitle": "Scrivi Accadde Oggi per gli avvenimenti del giorno"
 
-			  }
-			   
-
-, {
-
-    "title": "Guida TV",
-    "subtitle": "Scegli Guida TV dal menu per la programmazione"
-
-}
-
-, {
-
-    "title": "Disattiva",
-    "subtitle": "Scegli Notifiche dal menu per disattivare"
-
-}
+                }
 
 
-			  ]
+                    , {
+
+                    "title": "Guida TV",
+                    "subtitle": "Scegli Guida TV dal menu per la programmazione"
+
+                }
+
+                    , {
+
+                    "title": "Disattiva",
+                    "subtitle": "Scegli Notifiche dal menu per disattivare"
+
+                }
+
+
+                ]
 
 
             }
@@ -459,8 +460,7 @@ function sendGenericAccaddeOggi(sender) {
     })
 }
 
-function sendQuickAnswer(sender)
-{
+function sendQuickAnswer(sender) {
     // distinguere se l'utente ha o meno le notifiche abilitate..
     var request = require('request');
     var messageData = "";
@@ -472,16 +472,16 @@ function sendQuickAnswer(sender)
                 messageData = {
                     "text": "Vuoi attivare le notifiche?",
                     "quick_replies": [
-                      {
-                          "content_type": "text",
-                          "title": "Si, attiva",
-                          "payload": "disattivano"
-                      },
-                      {
-                          "content_type": "text",
-                          "title": "No, grazie",
-                          "payload": ""
-                      }
+                        {
+                            "content_type": "text",
+                            "title": "Si, attiva",
+                            "payload": "disattivano"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "No, grazie",
+                            "payload": ""
+                        }
                     ]
                 }
             }
@@ -489,16 +489,16 @@ function sendQuickAnswer(sender)
                 messageData = {
                     "text": "Vuoi disattivare le notifiche?",
                     "quick_replies": [
-                      {
-                          "content_type": "text",
-                          "title": "Si, disattiva",
-                          "payload": "disattivasi"
-                      },
-                      {
-                          "content_type": "text",
-                          "title": "No, grazie",
-                          "payload": ""
-                      }
+                        {
+                            "content_type": "text",
+                            "title": "Si, disattiva",
+                            "payload": "disattivasi"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "No, grazie",
+                            "payload": ""
+                        }
                     ]
                 }
             }
@@ -519,13 +519,11 @@ function sendQuickAnswer(sender)
                     }
                 })
             }
-            else
-            {
+            else {
                 console.log("message data empty")
             }
         }
-        else
-        {
+        else {
             console.log("get_sender_status error: " + error)
         }
     })
@@ -674,7 +672,7 @@ function ActivatePushSender(sender, value) {
                 sendTextMessage(sender, "Da questo momento in poi riceverai le notifiche di Rai Storia una volta a settimana")
             }
             else if (value == 0) {
-                    sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
+                sendTextMessage(sender, "Da questo momento in poi non riceverai le notifiche di Rai Storia")
             }
         }
     })
